@@ -1,0 +1,7 @@
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #101828;
+  color: #993955;
+  padding: 1em;
+}
