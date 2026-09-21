@@ -1,17 +1,14 @@
-// Initial test to verify all is linked
-//console.log("Hello, World!");
-
 // ----- Core variables -----
-let welcomeMessage = `Welcome to the Rock Paper Scissors Game!`;
-const GAME_THROWS = ["Rock", "Paper", "Scissors"];
+const GAME_THROWS = ["rock", "paper", "scissors"];
 let userScore = 0;
 let computerScore = 0;
-let playAgain = null;
+let roundWinOrLose = "";
+let clickCount = 0; //to track rounds in user-displayed output
 
 /**
  * 
  * @param {array} selections - the possible throws available
- * @param {*} max - used as the ceiling for the random integer calculation
+ * @param {int} max - used as the ceiling for the random integer calculation
  * @returns - string name of the choice
  */
 function selectThrow(selections = GAME_THROWS, max = 3) {
@@ -19,66 +16,90 @@ function selectThrow(selections = GAME_THROWS, max = 3) {
     return selections[i];
 }
 
-do {
-    // Console output to welcome user
-    console.log(welcomeMessage);
-    computerThrow = selectThrow();
+/**
+ * 
+ * @param {string} user - user's throw selection
+ * @param {string} computer  - computer's throw selection
+ */
+function getGameWinner(user, computer) {
+    let currentRoundState = "";
 
-    // Remove post-debugging
-    console.log(`This is the computer's choice for reference: ${computerThrow}`);
-
-    // Prompt the user to select a throw
-    let userThrowIndex = prompt("Select your throw (1 for Rock, 2 for Paper, 3 for Scissors)");
-    let userThrow = GAME_THROWS[userThrowIndex - 1];
-
-    // Compare the throws against the game's ruleset
-    let gameState = null;
-
-    switch (userThrow) {
-        case "Rock":
-            if (computerThrow === "Rock") {
-                gameState = "Draw";
+    switch (user) {
+        case "rock":
+            if (computer === "rock") {
+                currentRoundState = "draw";
             }
-            else if (computerThrow === "Paper") {
-                gameState = "Lose";
-                computerScore++;
+            else if (computer === "paper") {
+                currentRoundState = "lose";
             }
-            else if (computerThrow === "Scissors") {
-                gameState = "Win";
-                userScore++;
+            else if (computer === "scissors") {
+                currentRoundState = "win";
             }
             break;
-        case "Paper":
-            if (computerThrow === "Rock") {
-                gameState = "Win";
-                userScore++;
+        case "paper":
+            if (computer === "rock") {
+                currentRoundState = "win";
             }
-            else if (computerThrow === "Paper") {
-                gameState = "Draw";
+            else if (computer === "paper") {
+                currentRoundState = "draw";
             }
-            else if (computerThrow === "Scissors") {
-                gameState = "Lose";
-                computerScore++;
+            else if (computer === "scissors") {
+                currentRoundState = "lose";
             }
             break;
-        case "Scissors":
-            if (computerThrow === "Rock") {
-                gameState = "Lose";
-                computerScore++;
+        case "scissors":
+            if (computer === "rock") {
+                currentRoundState = "lose";
             }
-            else if (computerThrow === "Paper") {
-                gameState = "Win";
-                userScore++;
+            else if (computer === "paper") {
+                currentRoundState = "win";
             }
-            else if (computerThrow === "Scissors") {
-                gameState = "Draw";
+            else if (computer === "scissors") {
+                currentRoundState = "draw";
+            }
+            break;
+    }
+    // Return the state of the current round so it can be triggered off of to score
+    return currentRoundState;
+}
+
+// Bring buttons into javascript
+const buttons = document.querySelectorAll("button");
+const results = document.querySelector("#results");
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+  // and for each one we add a 'click' listener
+  button.addEventListener("click", () => {
+    clickCount++;
+    let userThrow = button.id;
+    let computerThrow = selectThrow();
+
+    roundWinOrLose = getGameWinner(userThrow, computerThrow);
+
+    switch (roundWinOrLose) {
+        case "win":
+            userScore++;
+            if (userScore >= 5) {
+                alert("The user has won!")
+                window.location.reload();
+            }
+            break;
+        case "lose":
+            computerScore++;
+            if (computerScore >= 5) {
+                alert("The computer has won!")
+                window.location.reload();
             }
             break;
     }
 
-    // Declare victory, defeat, or draw
-    alert(`${gameState}\nCurrent score:\nComputer: ${computerScore}\nUser: ${userScore}`);
+    const span = document.createElement("span");
+    span.textContent = `Round ${clickCount} | Score: User = ${userScore}, Computer = ${computerScore}`;
+    results.appendChild(span);
 
-    // Ask the user if they want to play again
-    playAgain = prompt("Would you like to play again? (Yes or No)")
-} while (playAgain === "Yes");
+  });
+});
+
+// Display the running score as rounds are played
+// Announce a winner of the game one there are 5 tries

@@ -3,12 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rock Paper Scissors Console Game</title>
+  <title>Rock Paper Scissors SHOOT!</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="stylesheet" href="./styles.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h2>** See Dev Tools > Console for game **</h2>
+  <div class="container">
+    <img src="https://hips.hearstapps.com/hmg-prod/images/people-playing-paper-rock-scissors-royalty-free-illustration-1583269312.jpg" alt="An image of 3 hands, one throwing rock, one throwing paper, and one throwing scissors like in the game Rock Paper Scissors" />
+    <h1 class="text">Welcome to the Rock Paper Scissors Shootout!</h1>
+    <div class="buttons">
+      <button id="rock">Rock</button>
+      <button id="paper">Paper</button>
+      <button id="scissors">Scissors</button>
+    </div>
 
-  <script src="./script.js"></script>
+    <!-- This div is empty initially but gets populated as the game is played via script.js -->
+    <div id="results">
+
+    </div>
+
+  </div>
 </body>
 </html>

@@ -1,7 +1,73 @@
+:root {
+  color-scheme: dark; /* browser renders scrollbars and form controls dark */
+
+  /* Palette */
+  --ink-black: #101828;
+  --jet-black: #1e2939;
+  --slate-dark: #364153;
+  --slate-mid: #4b5563;
+  --slate-grey: #808998;
+  --off-white: #e5e7eb;
+  --verdigris: #009689;
+  --brick-ember: #ba2d0b;
+  --classic-crimson: #d72638;
+  --sweet-salmon: #fe938c;
+  --dark-amaranth: #9c0d38;
+  --walnut: #5b3000;
+
+  /* Roles */
+  --color-bg: var(--ink-black);
+  --color-surface: var(--jet-black);
+  --color-border: var(--slate-dark);
+  --color-border-strong: var(--slate-mid);
+  --color-text: var(--off-white);
+  --color-text-muted: var(--slate-grey);
+  --color-text-on-fill: #ffffff;
+  --color-accent: var(--verdigris);
+  --color-danger-text: var(--sweet-salmon);
+  --color-danger-fill: var(--classic-crimson);
+
+  /* Fonts */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* border-box everywhere, including pseudo-elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
+  padding: 24px;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+}
+
+.container {
   display: flex;
   flex-direction: column;
-  background-color: #101828;
-  color: #993955;
-  padding: 1em;
+}
+
+img {
+  height: 200px;
+  align-self: center;
+}
+
+h1 {
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+span {
+  display: table; /* use table to provide simple line break functionality without much fuss */
+  padding-top: 8px;
 }
